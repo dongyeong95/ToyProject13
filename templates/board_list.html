@@ -35,32 +35,108 @@
           padding: 20px;
 
           position: absolute;
-          top: 50%;
+          top: 10%;
           left: 50%;
-          transform: translate(-50%, -50%);
+          transform: translate(-50%);
 
           box-shadow: 0px 0px 10px 2px grey;
           border-radius: 10px;
       }
 
   </style>
+  <script>
+      function logout() {
+          $.removeCookie('mytoken', {path: '/'});
+          alert('로그아웃!')
+          window.location.href = '/'
+      }
+  </script>
 </head>
 <body>
 <div class="mytitle">
 </div>
 <div class="myboard">
-  <h1>팬 게시판 작성중</h1>
-  <div class="mb-3">
-    <label for="title" class="form-label">제목</label>
-    <input type="text" class="form-control" id="title">
-  </div>
-  <div class="mb-3">
-    <label for="comment" class="form-label">내용</label>
-    <textarea class="form-control" id="comment" rows="10"></textarea>
-  </div>
-  <button type="button" class="btn btn-primary">저장</button>
-  <button type="button" class="btn btn-primary">수정</button>
-  <button type="button" class="btn btn-primary">삭제</button>
+  <h1 style="float: left;">게시판</h1>
+  <button type="button" style="float: right; float: right;" class="btn btn-primary"
+          onclick="window.location.href='/board_add'">글쓰기</button>
+  <button type="button" style="float: right; float: right;" class="btn btn-primary" onclick="window.location.href='/login'">로그아웃</button>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col" width="50">번호
+      </th>
+      <th scope="col">제목
+      </th>
+      <th scope="col" width="150">닉네임
+      </th>
+    </tr>
+    </thead>
+    <tbody id="data">
+    </tbody>
+  </table>
 </div>
+<script>
+    $(document).ready(function () {
+        show_list();
+    });
+
+    function show_list() {
+        // $('#append-box').empty()
+        $.ajax({
+            type: "POST",
+            url: "show_list",
+            data: {},
+            success: function (data) {
+                console.log(data)
+                let html = '';
+                for (let i = 0; i < data.length; i++) {
+                    let _id = data[i]._id
+                    console.log(_id)
+                    html += "<tr><td>" + _id + "</td><td>" + `<button onclick=getPost(${_id})>${data[i].title}</button>` + "</td><td>" + data[i].name + "</td></tr>";
+                }
+                $('#data').append(html);
+            }
+        });
+    }
+
+
+    function getPost(_id) {
+        $.ajax({
+            type: 'GET',
+            url: `/boardget?_id=${_id}`,
+            success: function () {
+                window.location.href = `/boardget?_id=${_id}`
+
+            }
+        })
+    }
+
+    function board(num) {
+        $.ajax({
+            type: "POST",
+            url: "/board",
+            data: {num_give: num},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+    }
+
+    function board_delete(num) {
+        $.ajax({
+            type: "POST",
+            url: "/board/delete",
+            data: {delete_num_give: num},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+    }
+
+
+</script>
 </body>
 </html>
