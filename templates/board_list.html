@@ -44,6 +44,13 @@
       }
 
   </style>
+  <script>
+      function logout() {
+          $.removeCookie('mytoken', {path: '/'});
+          alert('로그아웃!')
+          window.location.href = '/login'
+      }
+  </script>
 </head>
 <body>
 <div class="mytitle">
@@ -52,6 +59,7 @@
   <h1 style="float: left;">게시판</h1>
   <button type="button" style="float: right; float: right;" class="btn btn-primary"
           onclick="window.location.href='/board_add'">글쓰기
+  <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
   </button>
   <table class="table">
     <thead>
@@ -127,6 +135,7 @@
             }
         });
     }
+
 
 </script>
 </body>
