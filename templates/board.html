@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+  <title>board list</title>
+  <style>
+      * {
+          font-family: 'Do Hyeon', sans-serif;
+      }
+
+      .mytitle {
+          background-color: black;
+          width: 100%;
+          height: 50px;
+
+          color: white;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .myboard {
+          max-width: 800px;
+          width: 95%;
+          margin: 20px auto;
+          padding: 20px;
+
+          position: absolute;
+          top: 10%;
+          left: 50%;
+          transform: translate(-50%);
+
+          box-shadow: 0px 0px 10px 2px grey;
+          border-radius: 10px;
+      }
+  </style>
+  <script>
+      // function input_event() {
+      //     const input_title = $('#title')
+      //     const modi = $('#modifyBtn')
+      //     input_title.readOnly = true
+      //     modi.addEventListener('click', () => input_title.readOnly = false)
+      //     console.log(input_title, modi)
+      // }
+
+      // function board() {
+      //     $.ajax({
+      //         type: "GET",
+      //         url: 'board',
+      //         data: {'title_give': title, 'comment_give': comment},
+      //         success: function (response) {
+      //             alert(response['msg'])
+      //
+      //         }
+      //     })
+      // }
+
+      function board_delete() {
+          let num = {{board._id}};
+          $.ajax({
+              type: "POST",
+              url: "/board/delete",
+              data: {delete_num_give: num},
+              success: function (response) {
+                  alert(response["msg"])
+                  window.location.reload()
+              }
+          });
+      }
+
+      function board_modify() {
+          let num = $('#numid').text();
+          let title = $('#title').val();
+          let comment = $('#comment').val();
+          console.log(num, title, comment)
+          $.ajax({
+              type: "POST",
+              url: "/board/modify",
+              data: {modify_num_give: num, modify_title_give: title, modify_comment_give: comment},
+              success: function (response) {
+                  alert(response["msg"])
+                  window.location.reload()
+              }
+          })
+      }
+
+
+  </script>
+</head>
+<body>
+<div class="mytitle">
+</div>
+<form action="/comment_save" method="post" class="myboard">
+  <h1>게시글</h1>
+  <h1 id="numid" style="display: none">{{board._id}}</h1>
+  <div class="mb-3">
+    <label for="title" class="form-label">제목</label>
+    <input value="{{board.title}}" type="text" class="form-control" id="title">
+  </div>
+  <div class="mb-3">
+    <label for="comment" class="form-label">내용</label>
+    <textarea class="form-control" id="comment" rows="10">{{board.comment}}</textarea>
+  </div>
+  <button onclick="board_modify()" type="button" class="btn btn-primary">수정</button>
+  <button onclick="board_delete()" type="button" class="btn btn-primary">삭제</button>
+</form>
+</body>
+</html>
