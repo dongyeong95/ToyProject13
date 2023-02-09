@@ -26,9 +26,9 @@ def home():
         user_info = db.user.find_one({"id": payload['id']})
         return render_template('board_list.html', nickname=user_info["nick"])
     except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+        return render_template('login.html')
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+        return render_template('login.html')
 
 
 @app.route('/login')

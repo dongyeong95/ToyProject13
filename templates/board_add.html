@@ -63,11 +63,12 @@
     function comment_save() {
         let title = $('#title').val();
         let comment = $('#comment').val();
+        let nick = $('#nick').val();
 
         $.ajax({
             type: "POST",
             url: 'comment_save',
-            data: {'title_give': title, 'comment_give': comment},
+            data: {'title_give': title, 'comment_give': comment, 'nick_give':nick},
             success: function (response) {
                 alert(response['msg'])
                 window.location.reload()
