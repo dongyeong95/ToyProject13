@@ -164,8 +164,9 @@ def comment_save():
     if title_receive == "":
         return jsonify({'msg': '제목을 넣어주세요!'})
 
-    addlist_num = list(db.board.find({}, {'_id': False}))
-    count_num = len(addlist_num) + 1
+    addlist_num = list(db.board.find({}, {}).sort([{'_id', -1}]))
+    dbcount = addlist_num[0]['_id']
+    count_num = dbcount + 1
 
     name = "홍길동"  # test
     name_num = str(count_num)  # test
