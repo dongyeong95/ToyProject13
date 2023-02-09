@@ -10,9 +10,11 @@
   <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
   <title>board list</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
   <style>
       * {
-          font-family: 'Do Hyeon', sans-serif;
+          font-family: 'Jua', sans-serif;
       }
 
       .mytitle {
@@ -22,10 +24,10 @@
 
           color: white;
 
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
+          /*display: flex;*/
+          /*flex-direction: column;*/
+          /*justify-content: center;*/
+          /*align-items: center;*/
       }
 
       .myboard {
@@ -43,6 +45,11 @@
           border-radius: 10px;
       }
 
+      .btnbtn {
+          border: none;
+          background-color: transparent;
+      }
+
   </style>
   <script>
       function logout() {
@@ -54,17 +61,20 @@
 </head>
 <body>
 <div class="mytitle">
+  <button type="button" style="float: right; margin: 5px" class="btn btn-primary "
+          onclick="window.location.href='/login'">로그아웃
+  </button>
 </div>
 <div class="myboard">
   <h1 style="float: left;">게시판</h1>
   <button type="button" style="float: right; float: right;" class="btn btn-primary"
-          onclick="window.location.href='/board_add'">글쓰기</button>
-  <button type="button" style="float: right; float: right;" class="btn btn-primary" onclick="window.location.href='/login'">로그아웃</button>
+          onclick="window.location.href='/board_add'">글쓰기
+  </button>
 
-  <table class="table">
+  <table class="table" style="font-size: 25px">
     <thead>
     <tr>
-      <th scope="col" width="50">번호
+      <th scope="col" width="80">번호
       </th>
       <th scope="col">제목
       </th>
@@ -93,7 +103,7 @@
                 for (let i = 0; i < data.length; i++) {
                     let _id = data[i]._id
                     console.log(_id)
-                    html += "<tr><td>" + _id + "</td><td>" + `<button onclick=getPost(${_id})>${data[i].title}</button>` + "</td><td>" + data[i].name + "</td></tr>";
+                    html += "<tr><td>" + _id + "</td><td>" + `<button class='btnbtn' onclick=getPost(${_id})>${data[i].title}</button>` + "</td><td>" + data[i].name + "</td></tr>";
                 }
                 $('#data').append(html);
             }
