@@ -72,7 +72,7 @@
               data: {delete_num_give: num},
               success: function (response) {
                   alert(response["msg"])
-                  window.location.reload()
+                  window.location.href = '/';
               }
           });
       }
@@ -88,7 +88,7 @@
               data: {modify_num_give: num, modify_title_give: title, modify_comment_give: comment},
               success: function (response) {
                   alert(response["msg"])
-                  window.location.reload()
+                  window.location.href = '/';
               }
           })
       }
