@@ -18,7 +18,8 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <title>board list</title>
 
@@ -60,10 +61,9 @@
     <script>
     // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
     function logout() {
-
-        $.removeCookie('mytoken');
+        $.removeCookie('mytoken',{path: '/'});
         alert('로그아웃!')
-        window.location.href='/login'
+        window.location.href='/'
       }
 
 
