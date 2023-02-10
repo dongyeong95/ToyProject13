@@ -64,14 +64,6 @@
   </style>
 
   <script>
-      function register() {
-          window.location.href = '/register'
-      }
-
-      {% if msg %}
-      alert('{{ msg }}')
-      {% endif %}
-
       function login() {
           $.ajax({
               type: "POST",
@@ -83,7 +75,7 @@
                       // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
                       $.cookie('mytoken', response['token']);
 
-                      // alert('로그인 완료!')
+                      alert('로그인 완료!')
                       window.location.href = '/'
                   } else {
                       // 로그인이 안되면 에러메시지를 띄웁니다.
@@ -93,6 +85,9 @@
           })
       }
 
+      function signUp() {
+          window.location.href = '/register'
+      }
   </script>
 
 </head>
@@ -113,7 +108,7 @@
            id="userpw" placeholder="My Password">
   </div>
   <button type="submit" onclick="login()" class="btn btn-primary">로그인</button>
-  <button type="submit" onclick="register()" class="btn btn-primary">회원가입</button>
+  <button type="submit" onclick="signUp()" class="btn btn-primary">회원가입</button>
 </div>
 </body>
 </html>

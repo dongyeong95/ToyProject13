@@ -62,14 +62,17 @@
 
   </style>
   <script>
-      function signup() {
+      // 간단한 회원가입 함수입니다.
+      // 아이디, 비밀번호, 닉네임을 받아 DB에 저장합니다.
+      function register() {
           $.ajax({
               type: "POST",
               url: "/api/register",
               data: {
-                  id_give: $('#input-id').val(),
-                  pw_give: $('#input-password').val(),
-                  nickname_give: $('#input-nickname').val()
+                  id_give: $('#userid').val(),
+                  pw_give: $('#userpw').val(),
+                  nickname_give: $('#usernick').val(),
+                  // userstore_give: $(`#userstore`).val()
               },
               success: function (response) {
                   if (response['result'] == 'success') {
@@ -77,10 +80,38 @@
                       window.location.href = '/login'
                   } else {
                       alert(response['msg'])
+                      window.location.reload()
                   }
               }
           })
       }
+
+      function check_id() {
+          $.ajax({
+              type: "POST",
+              url: "/register/check_id",
+              data: {
+                  id_give: $('#userid').val()
+              },
+              success: function (response) {
+                  alert(response['msg'])
+              }
+          })
+      }
+
+      function check_nick() {
+          $.ajax({
+              type: "POST",
+              url: "/register/check_nick",
+              data: {
+                  nick_give: $('#usernick').val()
+              },
+              success: function (response) {
+                  alert(response['msg'])
+              }
+          })
+      }
+
   </script>
 </head>
 
@@ -92,20 +123,25 @@
   <h1 class="display-4">회원가입</h1>
   <div class="form-group">
     <label>ID</label>
+    <button onclick="check_id()" type="button" class="btn btn-primary">중복 확인</button>
     <input type="text" class="form-control" aria-describedby="emailHelp"
-           id="input-id" placeholder="">
+           id="userid" placeholder="">
   </div>
   <div class="form-group">
     <label>닉네임</label>
+    <button onclick="check_nick()" type="button" class="btn btn-primary">중복 확인</button>
     <input type="text" class="form-control" aria-describedby="emailHelp"
-           id="input-nickname" placeholder="">
+           id="usernick" placeholder="">
   </div>
   <div class="form-group">
     <label>비밀번호</label>
     <input type="password" class="form-control" aria-describedby="emailHelp"
-           id="input-password" placeholder="">
+           id="userpw" placeholder="">
   </div>
-  <button type="submit" onclick="signup()" class="btn btn-primary">회원가입</button>
+  <div>
+    <button type="submit" class="btn btn-primary" onclick="window.location.href ='/login'">뒤로가기</button>
+    <button type="submit" onclick="register()" class="btn btn-primary">회원가입</button>
+  </div>
 </div>
 </body>
 </html>
